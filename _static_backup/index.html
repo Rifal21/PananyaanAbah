@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="su">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SundaAI - Batara Guru</title>
+    <meta name="description" content="AI Chat Assistant khusus Basa Sunda" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Syntax Highlight -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <i class="fa-solid fa-mountain-sun"></i>
+            <span>SundaAI</span>
+          </div>
+          <button id="new-chat-btn" class="btn-icon" title="Cariosan Anyar">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+        </div>
+
+        <div class="history-list">
+          <div class="history-group">
+            <h3>Dinten Ieu</h3>
+            <button class="history-item active">
+              <i class="fa-regular fa-message"></i>
+              <span>Percakapan Anyar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <button id="settings-btn" class="user-profile">
+            <div class="avatar">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            <span>Setélan API</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Chat Area -->
+      <main class="chat-area">
+        <header class="mobile-header">
+          <button id="menu-toggle" class="btn-icon">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <span class="brand">SundaAI</span>
+        </header>
+
+        <div id="chat-container" class="messages-container">
+          <!-- Welcome Message -->
+          <div class="message ai-message welcome-message">
+            <div class="message-content">
+              <h2>Sampurasun! 🙏</h2>
+              <p>
+                Simkuring téh asistén AI anu khusus nyarios Basa Sunda. Aya nu
+                tiasa dibantos dinten ieu?
+              </p>
+              <div class="suggestions">
+                <button class="suggestion-chip">
+                  Caritakeun dongéng Sangkuriang
+                </button>
+                <button class="suggestion-chip">
+                  Resep seblak nu raos kumaha?
+                </button>
+                <button class="suggestion-chip">
+                  Tarjamahkeun "Saya mau makan" ka Basa Sunda
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <div class="input-wrapper">
+            <textarea
+              id="user-input"
+              placeholder="Tulis parosian anjeun didieu..."
+              rows="1"
+            ></textarea>
+            <button id="send-btn" class="send-btn" disabled>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </div>
+          <p class="disclaimer">
+            SundaAI tiasa waé ngadamel kalepatan. Pariksa deui informasina.
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <!-- API Key Modal -->
+    <div id="api-modal" class="modal">
+      <div class="modal-content glass-panel">
+        <div class="modal-header">
+          <h2>Setélan API Key</h2>
+          <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Punten lebetkeun <strong>Google Gemini API Key</strong> anjeun
+            kanggo ngawitan.
+          </p>
+          <div class="input-group">
+            <input
+              type="password"
+              id="api-key-input"
+              placeholder="Tempelkeun API Key didieu..."
+            />
+            <button id="toggle-visibility" class="btn-icon">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <p class="help-text">
+            Teu gaduh konci? Kengingkeun di
+            <a href="https://aistudio.google.com/app/apikey" target="_blank"
+              >Google AI Studio</a
+            >.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="save-api-btn" class="btn-primary">Simpen</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
