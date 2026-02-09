@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SundaAI - Batara Guru</title>
+    <title>Pananyaan Abah - SundaAI</title>
     <meta name="description" content="AI Chat Assistant khusus Basa Sunda">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +30,11 @@
 </head>
 
 <body>
-    {{ $slot }}
+    @if (isset($slot))
+        {{ $slot }}
+    @else
+        @yield('content')
+    @endif
 
     @livewireScripts
 </body>

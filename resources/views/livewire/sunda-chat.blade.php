@@ -3,7 +3,7 @@
     <aside class="sidebar" :class="{ 'show': sidebarOpen, 'collapsed': !sidebarOpen }">
         <div class="sidebar-header">
             <div class="logo">
-                <i class="fa-solid fa-scroll"></i>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-img">
                 <div class="logo-text" x-show="sidebarOpen" x-transition>
                     <span>Pananyaan Abah</span>
                     <small class="aksara-sunda">ᮕᮔᮑᮃᮔ᮪ ᮃᮒᮂ</small>
@@ -37,13 +37,53 @@
             </div>
         </div>
 
-        <div class="sidebar-footer">
-            <button wire:click="$set('showApiKeyModal', true)" class="user-profile">
+        <div class="sidebar-footer" x-data="{ showDevModal: false }">
+            <button @click="showDevModal = true" class="user-profile">
                 <div class="avatar">
-                    <i class="fa-solid fa-user-gear"></i>
+                    <i class="fa-solid fa-code"></i>
                 </div>
-                <span x-show="sidebarOpen">Setélan Konci (API)</span>
+                <a href="{{ route('profile') }}" class="dev-info" x-show="sidebarOpen" x-transition
+                    style="text-decoration: none; color: inherit;">
+                    <small>Dimekarkeun ku:</small>
+                    <strong style="display: block;">Rifal Kurniawan</strong>
+                </a>
             </button>
+
+            <!-- Dev Info Modal -->
+            <div class="modal" :class="{ 'active': showDevModal }" x-show="showDevModal" x-transition
+                style="display: none;" :style="showDevModal ? 'display: flex' : 'display: none'">
+                <div class="modal-content glass-panel" @click.away="showDevModal = false">
+                    <div class="modal-header">
+                        <h2>Ngeunaan Pamekar</h2>
+                        <button @click="showDevModal = false" class="close-modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo"
+                            style="width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 1rem; display: block; object-fit: contain;">
+                        <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.5rem;">Pananyaan Abah</h3>
+                        <p style="margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.4;">Aplikasi cariosan
+                            kacerdasan jieunan (AI) anu ngagunakeun Basa Sunda, pikeun ngalestarikeun budaya jeung basa
+                            karuhun urang dina jaman modérn.</p>
+
+                        <div
+                            style="background: rgba(0,0,0,0.3); padding: 1.25rem; border-radius: 0.75rem; border: 1px solid var(--border);">
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">Dimekarkeun
+                                kalayan asih ku:</p>
+                            <h4 style="color: var(--text-main); font-size: 1.25rem; margin: 0;">
+                                <a href="{{ route('profile') }}"
+                                    style="color: var(--primary); text-decoration: none; border-bottom: 1px dashed var(--primary);">Rifal
+                                    Kurniawan</a>
+                            </h4>
+                            <p style="font-size: 0.8rem; margin-top: 0.75rem; opacity: 0.6;">© 2024 Pananyaan Abah.
+                                Sadaya hak ditangtayungan.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button @click="showDevModal = false" class="btn-primary">Tutup</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </aside>
 
@@ -56,9 +96,13 @@
             <button @click="sidebarOpen = !sidebarOpen" class="btn-icon">
                 <i class="fa-solid" :class="sidebarOpen ? 'fa-bars-staggered' : 'fa-bars'"></i>
             </button>
-            <div class="brand-group">
-                <span class="brand">Pananyaan Abah</span>
-                <span class="aksara-sunda mobile-aksara">ᮕᮔᮑᮃᮔ᮪ ᮃᮒᮂ</span>
+            <div class="brand-group" style="flex-direction: row; align-items: center; gap: 0.75rem;">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo-img"
+                    style="width: 32px; height: 32px;">
+                <div style="display: flex; flex-direction: column;">
+                    <span class="brand">Pananyaan Abah</span>
+                    <span class="aksara-sunda mobile-aksara">ᮕᮔᮑᮃᮔ᮪ ᮃᮒᮂ</span>
+                </div>
             </div>
         </header>
 
@@ -110,8 +154,9 @@
             @endif
 
             <div class="input-wrapper">
-                <textarea wire:model="userInput" wire:keydown.enter.prevent="sendMessage" placeholder="Tulis parosian anjeun didieu..."
-                    rows="1" style="height: auto;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                <textarea wire:model="userInput" wire:keydown.enter.prevent="sendMessage"
+                    placeholder="Tulis parosian anjeun didieu..." rows="1" style="height: auto;"
+                    oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                 <button wire:click="sendMessage" class="send-btn" wire:loading.attr="disabled">
                     <i class="fa-solid fa-paper-plane"></i>
                 </button>
@@ -120,44 +165,6 @@
         </div>
     </main>
 
-    <!-- API Key Modal -->
-    @if ($showApiKeyModal)
-        <div class="modal active">
-            <div class="modal-content glass-panel" wire:ignore.self x-data="{ showTutorial: false }">
-                <div class="modal-header">
-                    <h2>Setélan API Key</h2>
-                    <button wire:click="$set('showApiKeyModal', false)" class="close-modal"><i
-                            class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body">
-                    <p>Punten lebetkeun <strong>Google Gemini API Key</strong> anjeun kanggo ngawitan.</p>
-
-                    <button @click="showTutorial = !showTutorial" class="tutorial-toggle">
-                        <i class="fa-solid" :class="showTutorial ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
-                        Kumaha cara kengingkeun API Key? (Tutorial)
-                    </button>
-
-                    <div x-show="showTutorial" x-transition class="tutorial-content">
-                        <ol>
-                            <li>Buka loka <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI
-                                    Studio</a>.</li>
-                            <li>Login nganggo akun Google (Gmail) salira.</li>
-                            <li>Klik tombol biru <strong>"Create API key"</strong>.</li>
-                            <li>Pilih <strong>"Create API key in new project"</strong>.</li>
-                            <li>Salin kode (Copy) anu muncul, teras témpélkeun di handap ieu.</li>
-                        </ol>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="text" wire:model="apiKeyInput" placeholder="Tempelkeun API Key didieu...">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button wire:click="saveApiKey" class="btn-primary">Simpen</button>
-                </div>
-            </div>
-        </div>
-    @endif
 
     <script>
         // Track seen messages and suppression

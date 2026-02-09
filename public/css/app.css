@@ -160,6 +160,20 @@ body {
   text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
 }
 
+.logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-darker);
+}
+
+.sidebar.collapsed .logo-img {
+    width: 40px;
+    height: 40px;
+}
+
 .btn-icon {
   background: transparent;
   border: 1px solid transparent;
@@ -309,6 +323,24 @@ body {
   justify-content: center;
   font-size: 0.9rem;
   color: var(--primary);
+  flex-shrink: 0;
+}
+
+.dev-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.dev-info small {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.dev-info strong {
+    font-size: 0.9rem;
+    color: var(--primary);
 }
 
 /* Chat Area */

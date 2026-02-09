@@ -14,8 +14,6 @@ class SundaChat extends Component
     public $messages = [];
     public $userInput = '';
     public $isLoading = false;
-    public $showApiKeyModal = false;
-    public $apiKeyInput = '';
 
     // System Prompt for Sundanese Context
     const SYSTEM_PROMPT = <<<EOT
@@ -49,13 +47,7 @@ EOT;
         if ($currentId && isset($allSessions[$currentId])) {
             $this->loadChat($currentId);
         } else {
-            // Check if there are any sessions at all, maybe load the latest one?
-            // Or just create new. Let's create new for a fresh start or if migration failed.
             $this->createNewSession();
-        }
-
-        if (!Session::has('gemini_api_key')) {
-            $this->showApiKeyModal = true;
         }
     }
 
@@ -71,13 +63,6 @@ EOT;
         $this->sessions = $all;
     }
 
-    public function saveApiKey()
-    {
-        if (!empty($this->apiKeyInput)) {
-            Session::put('gemini_api_key', $this->apiKeyInput);
-            $this->showApiKeyModal = false;
-        }
-    }
 
     public function newChat()
     {
@@ -208,13 +193,13 @@ EOT;
 
     public function generateAiResponse()
     {
-        $apiKey = Session::get('gemini_api_key');
+        $apiKey = config('services.gemini.key');
 
         if (!$apiKey) {
             $this->messages[] = [
                 'id' => uniqid(),
                 'role' => 'model',
-                'content' => "**Punten:** API Key teu acan disetél."
+                'content' => "**Punten:** API Key teu acan disetél dina server ( .env )."
             ];
             $this->isLoading = false;
             $this->persistSession();
